@@ -1,0 +1,8 @@
+useDynLib(gridkernel, .registration=TRUE)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)
+S3method(calckernel, matrix)
+S3method(calckernel, grid)
+S3method(gaussiansmooth, grid)
+S3method(kernelsmooth, matrix)
+S3method(kernelsmooth, grid)
