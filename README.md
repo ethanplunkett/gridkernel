@@ -13,7 +13,7 @@ or kernelsmooth(),  and then convert back  to a raster with raster().
 
 ## Installation
 
-This package imports on rasterprocess so inherits that package's dependence on 
+This package imports rasterprocess so inherits that package's dependence on 
 windows. 
 
 Use the code below to install gridprocess
