@@ -13,7 +13,6 @@ or kernelsmooth(),  and then convert back  to a raster with raster().
 
 ## Installation
 
-
 Use the code below to install gridprocess
  [gridprocess](https://github.com/ethanplunkett/gridprocess) and [gridkernel](https://github.com/ethanplunkett/gridkernel)
  
