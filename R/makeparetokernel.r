@@ -4,7 +4,7 @@ makeparetokernel<-function(scale, shape, max.r = max.r,
   max.r.cells <- max.r/cellsize
   size = ceiling(max.r.cells) * 2 + 1
   center = ceiling(max.r.cells) + 1
-  kernel <- new("matrix", 0, size, size)
+  kernel <- matrix(0, nrow = size, ncol = size)
 
   rows <- row(kernel)
   cols <- col(kernel)

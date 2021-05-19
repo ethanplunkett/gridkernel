@@ -21,7 +21,7 @@ makegaussiankernel <- function( sd, max.r=3*sd, cellsize=1, include.center.cell=
   sd=sd/cellsize
   size = ceiling(max.r)*2+1
   center = ceiling(max.r)+1
-  kernel <- new('matrix', 0, size, size)
+  kernel <- matrix(0, nrow = size, ncol = size)
   rows <- row(kernel)
   cols <- col(kernel)
   dists <- sqrt( (rows - center)^2 + (cols - center)^2 )
