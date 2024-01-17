@@ -1,7 +1,7 @@
 Package: gridkernel
 Type: Package
 Title: Package to apply kernels to raster data with NA and edge correction
-Version: 0.1.1
+Version: 0.1.2
 Author: Ethan Plunkett
 Imports: Rcpp (>= 1.0.1)
 Suggests: texmex, gridprocess
