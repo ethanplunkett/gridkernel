@@ -3,20 +3,24 @@
 
 # Ignore rstudio files
 Code.Rproj
-.Rproj* 
+.Rproj*
 .Rproj.user/
 .Rhistory
 .Rproj.user
 *.Rapp.history
 *.Rproj
 
-	
-# Ignore Mac Specific Folder Data 
+
+# Ignore Mac Specific Folder Data
 .DS_Store
 
 # Ignore edit pad __history folders
 __history/
 
 
-
+# Ignore compiled objects
+src/*.o
+src/*.so
+src/*.dll
+src/symbols.rds
 
