@@ -1,23 +1,23 @@
 
 gaussiansmooth.grid<- function(x, sd, max.r=3*sd, kernel.dim=21, max.p.na=1, sample.points, weights,
                                 no.match=0, use.old=FALSE, na.value = NA, ...	){
- 
-  # This function performs a gaussiansmooth on a grid object. 
+
+  # This function performs a gaussiansmooth on a grid object.
   #   For efficiency sake if the sd is much larger than the cellsize the grid is first upscaled then smoothed and then downscaled
-  #	 
   #
-  # Arguments 
+  #
+  # Arguments
   #	x : grid object to be smoothed
   #	sd: the standard deviation (in map units) of the gaussian kernel
   #     max.r : the maximum radius (in map units) of the guassian kernel
-  #     kernel.dim : the target dimension of the kernel set to 0 to avoid upscaling 
+  #     kernel.dim : the target dimension of the kernel set to 0 to avoid upscaling
   #	  otherwise x will be upscaled such that a kernel of kernel.dim is sufficient to reach max.r units out.
   #	  higher values result in more precise output at the expense of longer computation times.
   #	  max.p.na : is passed onto upscale (if upscaling is necessary)
   #  	  sample.points : a matrix or data.frame with x and y columns which specify points to sample
   #	  weights : a dataframe with columns "value" and "weight" the first containing grid values and the second containing the associated weight. If these columns are missing and the dataframe contains two columns it will be assumed that the first is "value" and second "weight"
   # Value : A grid of the same extent and cellsize as x which has been smoothed.
-  
+
   # Setup for sampling points
   if(!missing(sample.points)){
     if(!all(c("x", "y") %in% names(sample.points)))
@@ -30,7 +30,7 @@ gaussiansmooth.grid<- function(x, sd, max.r=3*sd, kernel.dim=21, max.p.na=1, sam
   } else {
     sample=FALSE
   }
-  
+
   if(!missing(weights)){
     if(all(c("value", "weight") %in% colnames(weights))){
       x <- swap(x, weights$value, weights$weight, no.match=no.match, na.value = na.value)
@@ -40,8 +40,13 @@ gaussiansmooth.grid<- function(x, sd, max.r=3*sd, kernel.dim=21, max.p.na=1, sam
       stop("If weights are supplied and the dataframe has more than two columns it must have columns labled \"value\" and \"weight\".")
     }
   }
-  
-  
+
+  if(max.r < sd)
+    warning("max.r is set to less than the standard deviation. ",
+            "This is likely in error. ",
+            "max.r should be in mapunits not multiples of sd")
+
+
   current.window.dim <- max.r*2/x$cellsize # in cells
   o.grid.info <- x[names(x)!= "m"] # save the metadata from the orignal grid (drop the matrix)
   upscaled= FALSE # flag to keep track of upscaling
@@ -56,13 +61,13 @@ gaussiansmooth.grid<- function(x, sd, max.r=3*sd, kernel.dim=21, max.p.na=1, sam
     x <- x2
     rm(x2)
     gc()
-    upscaled  <- TRUE 
+    upscaled  <- TRUE
   }
   k <- makegaussiankernel(sd=sd, max.r=max.r, cellsize=x$cellsize)
   print("Smoothing")
   x$m <- kernelsmooth(x$m, k, use.old = use.old)
   gc()
-  if(upscaled){    
+  if(upscaled){
     print("Downscaling")
     print(paste("Factor =", factor))
     x<- downscale(x, factor=factor)
